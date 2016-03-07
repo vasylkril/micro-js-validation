@@ -1,0 +1,186 @@
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+    valid = false;
+
+    function stringSizer(str) {
+        if (str.length == 1) {
+            return "0".concat(str);
+        } else {
+            return str;
+        }
+    }
+
+    function FirstNameChecker() {
+        if (document.getElementById("FirstName").value == "") {
+            document.getElementById("outPutMessages").innerHTML = "You need to enter a valid first name.";
+        } else {
+            document.getElementById("outPutMessages").innerHTML = "";
+        }
+    }
+
+    function LastNameChecker() {
+        if (document.getElementById("LastName").value == "") {
+            document.getElementById("outPutMessages").innerHTML = "You need to enter a valid last name.";
+        } else {
+            document.getElementById("outPutMessages").innerHTML = "";
+        }
+    }
+
+    function EmailChecker() {
+        if ((RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$")).test(document.getElementById("Email").value) == false) {
+            document.getElementById("outPutMessages").innerHTML = "You need to enter a valid Email address.";
+        } else {
+            document.getElementById("outPutMessages").innerHTML = "";
+        }
+    }
+
+    function PhoneChecker() {
+        if ((RegExp("^(\\+[0-9]{1,2}[-. ]?)?(\\([0-9]{3}\\)|[0-9]{3})[-. ]?[0-9]{3}[-. ]?[0-9]{4}$")).test(document.getElementById("Phone").value) == false) {
+            document.getElementById("outPutMessages").innerHTML = "You need to enter a valid Phone number.";
+        } else {
+            document.getElementById("outPutMessages").innerHTML = "";
+        }
+    }
+    $(document).ready(function() {
+        $("#FirstName").on("input", function() {
+            FirstNameChecker();
+        });
+        $("#LastName").on("input", function() {
+            LastNameChecker();
+        });
+        $("#Email").on("input", function() {
+            EmailChecker();
+        });
+        $("#Phone").on("input", function() {
+            PhoneChecker();
+        });
+        $("#postalCode").on("input", function() {
+            postalCodeChecker();
+        });
+        $("#heyoSubmitButton").on('click', function(event) {
+            $("#coverUpImage").show();
+            event.preventDefault();
+            if ($("#FirstName").val() == "") {
+                document.getElementById("outPutMessages").innerHTML = "You need to enter a valid first name.";
+                return;
+            }
+            if ($("#LastName").val() == "") {
+                document.getElementById("outPutMessages").innerHTML = "You need to enter a valid last name.";
+                return;
+            }
+            if ((RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$")).test(document.getElementById("Email").value) == false)
+                if ((RegExp("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$")).test($("#Email").val()) == false) {
+                    document.getElementById("outPutMessages").innerHTML = "You need to enter a valid Email address.";
+                    return;
+                }
+            if ((RegExp("^(\\+[0-9]{1,2}[-. ]?)?(\\([0-9]{3}\\)|[0-9]{3})[-. ]?[0-9]{3}[-. ]?[0-9]{4}$")).test($("#Phone").val()) == false) {
+                document.getElementById("outPutMessages").innerHTML = "You need to enter a valid Phone number.";
+                return;
+            }
+            var formid = "1194";
+            var Inquiry_Interest_Id__c = "34234234";
+            var Inquiry_Interest__c = "TEST PROJECT NAME";
+            var munchkinId = "615-KOO-288";
+            var Conversion_URL_Long__c = window.location.href;
+            var _mkt_disp = "return";
+            var _mkt_trk = "";
+            $.post("https://app-abq.marketo.com/index.php/leadCapture/save", {
+                "FirstName": $("#FirstName").val(),
+                "LastName": $("#LastName").val(),
+                "Email": $("#Email").val(),
+                "Phone": $("#Phone").val(),
+                "formid": formid,
+                "munchkinId": munchkinId,
+                "formidr": formid,
+                "Inquiry_Interest_Id__c": Inquiry_Interest_Id__c,
+                "Inquiry_Interest__c": Inquiry_Interest__c,
+                "Conversion_URL_Long__c": Conversion_URL_Long__c,
+                "_mkt_disp": _mkt_disp,
+                "_mkt_trk": _mkt_trk
+            });
+            $('#FirstName').hide();
+            $('#LastName').hide();
+            $('#Email').hide();
+            $('#Phone').hide();
+            $('#heyoSubmitButton').hide();
+            $('#disclaimer').hide();
+            document.getElementById("outPutMessages-fbscript").innerHTML = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','//connect.facebook.net/en_US/fbevents.js');fbq('init', '1488221148078920');fbq('track', 'PageView');fbq('track', 'Lead');";
+            document.getElementById("outPutMessages-pixel").innerHTML = "<img height='1' width='1' style='display:none'src='https://www.facebook.com/tr?id=1488221148078920&ev=PageView&noscript=1'/>";
+            document.getElementById("outPutMessages-pixel").innerHTML = "<img height='1' width='1' style='display:none'src='https://www.facebook.com/tr?id=1488221148078920&ev=PageView&noscript=1'/>";
+            document.getElementById("outPutMessages-fbscript2").innerHTML = "(function() {  var _fbq = window._fbq || (window._fbq = []);  if (!_fbq.loaded) {    var fbds = document.createElement('script');    fbds.async = true;    fbds.src = '//connect.facebook.net/en_US/fbds.js';    var s = document.getElementsByTagName('script')[0];    s.parentNode.insertBefore(fbds, s);    _fbq.loaded = true;  }})();window._fbq = window._fbq || [];window._fbq.push(['track', '6019345303444', {'value':'0.00','currency':'CAD'}]);";
+            document.getElementById("outPutMessages-pixel2").innerHTML = "<img height='1' width='1' alt='' style='display:none' src='https://www.facebook.com/tr?ev=6019345303444&cd[value]=0.00&cd[currency]=CAD&noscript=1' />";
+            document.getElementById("outPutMessages-1").innerHTML = "ENTRY RECEIVED!";
+            document.getElementById("outPutMessages").innerHTML = "An expert VIP team member will be in touch with you shortly. Know someone who is looking for a great pre-construction condo? Share this page to send them our way!";
+            $("#coverUpImage").hide();
+        });
+    });
+</script>
+<style>
+    .heyoForm {
+        width: 100%;
+    }
+    
+    .inputfield {
+        margin: 0;
+        line-height: 1.2em;
+        font-size: 1.3em;
+        border-radius: 4px;
+        margin-top: 10px !important;
+        padding: 9px;
+        border: 2px solid #90b816;
+        cursor: pointer;
+        box-sizing: border-box;
+        background-image: none;
+        font-family: inherit;
+        width: 300px;
+    }
+    
+    .inputfield:hover {
+        border: 2px solid #dd2329;
+    }
+    
+    .SubBtn {
+        display: inline-block;
+        position: relative;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #7fbf4d;
+        background-image: linear-gradient(to bottom, #7fbf4d, #63a62f);
+        border-color: #63a62f #63a62f #5b992b;
+        border-image: none;
+        border-radius: 3px;
+        border-style: solid;
+        border-width: 1px;
+        box-shadow: 0 1px 0 0 #96ca6d inset;
+        color: #fff;
+        font: bold 11px/1 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+        padding: 7px 10px 8px;
+        margin-top: 20px;
+        margin-right: 140px;
+        text-align: center;
+        text-shadow: 0 -1px 0 #4c9021;
+        width: 160px;
+    }
+    
+    .SubBtn:hover {
+        background-color: #76b347;
+        background-image: linear-gradient(to bottom, #76b347, #5e9e2e);
+        box-shadow: 0 1px 0 0 #8dbf67 inset;
+        cursor: pointer;
+    }
+</style>
+<center>
+    <form method="post" enctype="application/x-www-form-urlencoded" id="mktoForm_1194" name="mktoForm_1194"> <input class="inputfield" type="text" name="FirstName" id="FirstName" placeholder="First Name"> <br> <input class="inputfield" type="text" name="LastName" id="LastName" placeholder="Last Name"> <br> <input class="inputfield" type="email" name="Email" id="Email" placeholder="Email"> <br> <input class="inputfield" type="number" name="Phone" id="Phone" placeholder="Phone"> <br> <button class="SubBtn" type="button" value="button" id="heyoSubmitButton">SUBMIT</button>
+        <p id="disclaimer" style="line-height:12px;font-size:10px;color:#555555; margin-left:20px; margin-right:20px; margin-top:10px;">By providing your Email address, TheRedPin will continue to communicate with you, digitally. You can unsubscribe at any time.</p>
+    </form>
+</center>
+<center>
+    <p id="outPutMessages-1" style="color: #002b56; font-family: Trebuchet MS, Helvetica, sans-serif; font-size:30px; line-height:1.5; margin-left:20px; margin-right:20px; margin-top:0px;"></p>
+</center>
+<center>
+    <p id="outPutMessages" style="color: #002b56; font-family: Trebuchet MS, Helvetica, sans-serif; font-size:14px; line-height:1.5; margin-left:20px; margin-right:20px; margin-top:0px; margin-bottom:50px;"></p>
+    <script id="outPutMessages-fbscript"></script> <noscript id="outPutMessages-pixel"></noscript>
+    <script id="outPutMessages-fbscript2"></script><noscript id="outPutMessages-pixel2"></noscript>
+</center>
