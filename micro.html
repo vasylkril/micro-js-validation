@@ -1,7 +1,22 @@
-<style><!--
+<style>
 #message-two {color:black; margin:-30px 0 10px 0;font-weight:700;} 
-.fblock-two {display:inline-block; width: 100px; text-align:right !important: margin: 2px 7px 2px 0; float:left:} 
-.rblock-two {width: 300px; margin: 4px 7px 4px 10px; float:left: clear:both !important;} 
+.fblock-two {
+    display:inline-block; 
+    width: 100px; 
+    text-align:right !important; 
+    margin: 2px 7px 2px 0; 
+    float:left;
+} 
+.rblock-two {
+    display: block;
+    width: 300px; 
+    margin: 15px 0 0; 
+    clear:both !important;
+    text-transform: none !important;
+    border: 2px solid #B2B2B2 !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
+} 
 .formwidth-two { display: block; width:auto !important; padding-top:0px;} 
 input { outline: none; padding:6px; border-radius: 5px; width : 190px; margin: 0; -webkit-box-sizing: border-box; 
 /* For legacy WebKit based browsers */ -moz-box-sizing: border-box; 
@@ -22,40 +37,53 @@ input[type="phone"]:focus {outline: none; border: 2px solid #777;}
 .subbtn-two {background-color: #1b2735;font-weight:700; color: white !important; margin: 6px 0 10px 0px;cursor: pointer;border: 2px solid rgba(255, 255, 255, 0.85);border-radius: 5px; font-size:17px; padding:10px 8px;} 
 .subbtn-two:after {content: " >>>";}
 .subbtn-two:hover, .subbtn-two:focus {background-color: rgba(0, 0, 0, 0.5); color: white !important;}
---></style>
-
+label.error {
+        display: block;
+        margin-bottom: 10px;
+        color: red;
+    }
+</style>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="jquery.validate.js"></script>
 <script>
-	window.onload = function() {
+    $.validator.setDefaults({
+        submitHandler: function() {
+            alert("submitted!");
+        }
+    });
 
-	    var Conversion_URL_Long__c = window.location.href;
-	    document.getElementById("this_url").value = Conversion_URL_Long__c;
-
-	    var trp_first = getUrlVars()["trp_first"];
-	    var trp_last = getUrlVars()["trp_last"];
-	    var trp_phone = getUrlVars()["trp_phone"];
-	    var trp_email = getUrlVars()["trp_email"].replace(/%40/g, "@");
-
-	    if (trp_first !== "FirstName") document.getElementById("FirstName").value = trp_first;
-	    if (trp_last !== "LastName") document.getElementById("LastName").value = trp_last;
-	    if (trp_phone !== "PhoneNumber") document.getElementById("Phone").value = trp_phone;
-	    if (trp_email) document.getElementById("Email").value = trp_email;
-
-	    function getUrlVars() {
-	        var vars = {};
-	        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
-	            vars[key] = value;
-	        });
-	        return vars;
-	    }
-	}
+    $().ready(function() {
+        // validate signup form on keyup and submit
+        $("#loginform").validate({
+            rules: {
+                firstname: "required",
+                lastname: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true,
+                    minlength: 9,
+                    maxlength: 10
+                }
+            },
+            messages: {
+                firstname: "Please enter your First Name",
+                lastname: "Please enter your Last Name",
+                email: "Please enter a valid email address",
+                phone: "Please enter your phone number"
+            }
+        });
+    });
 </script>
 
     <center>
-        <form method="post" enctype="application/x-www-form-urlencoded" action="https://app-abq.marketo.com/index.php/leadCapture/save" id="mktoForm_1191" name="mktoForm_1191" class="formwidth-two">
-            <input class="rblock-two" style="padding: 12px !important;" type="text" placeholder="First name" name="FirstName" id="FirstName" value="" required/><br />
-            <input class="rblock-two" style="padding: 12px !important;" type="text" placeholder="Last name" name="LastName" id="LastName" value="" required /><br />
-            <input class="rblock-two" style="padding: 12px !important; margin: 4px 7px 4px 10px !important;" type="phone" placeholder="Phone Number" name="Phone" id="Phone" value="" pattern="^(?:(?:+?1s*(?:[.-]s*)?)?(?:(s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))s*(?:[.-]s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})s*(?:[.-]s*)?([0-9]{4})(?:s*(?:#|x.?|ext.?|extension)s*(d+))?$" oninvalid="setCustomValidity('Please enter a valid phone number with extension if required. For example 416 123 4567 or 416 123 4567 x 123')" onchange="try{setCustomValidity('')}catch(e){}" required /><br />
-            <input class="rblock-two" style="padding: 12px !important;" placeholder="Email" name="Email" id="Email" value="" type="text" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$" oninvalid="setCustomValidity('Please enter a valid email. For example name@email.com')" onchange="try{setCustomValidity('')}catch(e){}" required /><br />
+        <form method="get" enctype="application/x-www-form-urlencoded" action="" id="loginform" name="loginform">
+            <input class="rblock-two" style="padding: 12px !important;" type="text" placeholder="First name" name="firstname" id="firstname"/>
+            <input class="rblock-two" style="padding: 12px !important;" type="text" placeholder="Last name" name="lastname" id="lastname" />
+            <input class="rblock-two" style="padding: 12px !important;" type="number" placeholder="Phone Number" name="phone" id="phone"  />
+            <input class="rblock-two" style="padding: 12px !important;" placeholder="Email" name="email" id="email" type="email" />
 
             <input id="contact_captured_on" type="hidden" name="contact_captured_on" value="" />
             <input id="contact_conversion_url" type="hidden" name="contact_conversion_url" />
@@ -69,7 +97,8 @@ input[type="phone"]:focus {outline: none; border: 2px solid #777;}
             <input type="hidden" name="Conversion_URL_Long__c" id="this_url" value="">
             <input type="hidden" name="Inquiry_Interest__c" id="project_name" value="Test Project Name">
             <br />
-            <input type="submit" class="btn btn-danger w100 flat-btn" value="REGISTER">
+            <!-- <button type="submit" class="btn btn-danger w100 flat-btn" name="submit" id="submit">REGISTER</button> -->
+            <input type="submit" id="submit" name="submit" class="btn btn-danger w100 flat-btn" value="REGISTER">
             
         </form>
     </center><center><span style="line-height:12px;font-size:10px;color:lightgray;">By providing your email address, TheRedPin will continue to communicate with you, digitally. You can unsubscribe at any time.</span></center>
